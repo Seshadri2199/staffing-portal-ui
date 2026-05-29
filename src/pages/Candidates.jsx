@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import API from "../api/axios";
 
 const emptyForm = {
+  recruiterName: "",
   candidateName: "",
   panNumber: "",
   currentRole: "",
@@ -183,20 +184,21 @@ export default function Candidates() {
               width: "100%",
               borderCollapse: "collapse",
               tableLayout: "fixed",
-              minWidth: 1200,
+              minWidth: 1400,
             }}
           >
             <thead>
               <tr>
                 {[
-                  "Name",
+                  "Recruiter Name",
+                  "Candidate Name",
                   "PAN Number",
                   "Current Role",
                   "Company",
                   "Domain",
                   "Exp (yr)",
-                  "Curr Salary",
-                  "Exp Salary",
+                  "Current Salary",
+                  "Expected Salary",
                   "Location",
                   "Exp Location",
                   "Feedback",
@@ -211,6 +213,7 @@ export default function Candidates() {
             <tbody>
               <tr style={{ background: "#f0f7ff" }}>
                 {[
+                  "recruiterName",
                   "candidateName",
                   "panNumber",
                   "currentRole",
@@ -268,7 +271,7 @@ export default function Candidates() {
               {visible.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={12}
+                    colSpan={13}
                     style={{
                       textAlign: "center",
                       padding: "40px",
@@ -285,7 +288,6 @@ export default function Candidates() {
                   return (
                     <tr
                       key={c.id}
-                      style={{ transition: "background 0.15s" }}
                       onMouseEnter={(e) =>
                         (e.currentTarget.style.background = "#f9fafb")
                       }
@@ -293,6 +295,9 @@ export default function Candidates() {
                         (e.currentTarget.style.background = "#fff")
                       }
                     >
+                      <td style={{ ...td, fontWeight: 500, color: "#667eea" }}>
+                        {c.recruiterName}
+                      </td>
                       <td style={{ ...td, fontWeight: 600, color: "#1a1a2e" }}>
                         {c.candidateName}
                       </td>

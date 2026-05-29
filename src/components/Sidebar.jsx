@@ -1,5 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 
+const logo = require("../assets/logo.jpg");
+
 const menuItems = [
   { label: "Dashboard", path: "/", icon: "📊" },
   { label: "Job Requirements", path: "/jobs", icon: "💼" },
@@ -25,53 +27,45 @@ export default function Sidebar() {
     >
       <div
         style={{
-          padding: "28px 24px 24px",
+          padding: "20px 24px",
           borderBottom: "1px solid rgba(255,255,255,0.1)",
+          display: "flex",
+          alignItems: "center",
+          gap: 12,
         }}
       >
-        <div
+        <img
+          src={logo}
+          alt="TechNext Logo"
           style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            marginBottom: 6,
+            width: 55,
+            height: 55,
+            borderRadius: 10,
+            objectFit: "contain",
+            background: "#fff",
+            padding: 4,
           }}
-        >
+        />
+        <div>
           <div
             style={{
-              width: 38,
-              height: 38,
-              borderRadius: 10,
-              background: "linear-gradient(135deg, #667eea, #764ba2)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 18,
+              color: "#fff",
+              fontWeight: 700,
+              fontSize: 14,
+              letterSpacing: 0.5,
             }}
           >
-            🚀
+            TechNext
           </div>
-          <div>
-            <div
-              style={{
-                color: "#fff",
-                fontWeight: 700,
-                fontSize: 16,
-                letterSpacing: 0.5,
-              }}
-            >
-              StaffingOS
-            </div>
-            <div
-              style={{
-                color: "rgba(255,255,255,0.5)",
-                fontSize: 10,
-                letterSpacing: 1,
-                textTransform: "uppercase",
-              }}
-            >
-              Recruitment Portal
-            </div>
+          <div
+            style={{
+              color: "rgba(255,255,255,0.5)",
+              fontSize: 10,
+              letterSpacing: 1,
+              textTransform: "uppercase",
+            }}
+          >
+            Recruitment Portal
           </div>
         </div>
       </div>
@@ -144,7 +138,13 @@ export default function Sidebar() {
           borderTop: "1px solid rgba(255,255,255,0.1)",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
           <div
             style={{
               width: 34,
@@ -162,10 +162,21 @@ export default function Sidebar() {
             R
           </div>
           <div>
-            <div style={{ fontSize: 12, fontWeight: 600, color: "#fff" }}>
+            <div
+              style={{
+                fontSize: 12,
+                fontWeight: 600,
+                color: "#fff",
+              }}
+            >
               Recruiter
             </div>
-            <div style={{ fontSize: 10, color: "rgba(255,255,255,0.4)" }}>
+            <div
+              style={{
+                fontSize: 10,
+                color: "rgba(255,255,255,0.4)",
+              }}
+            >
               Admin Access
             </div>
           </div>

@@ -3,15 +3,13 @@ import API from "../api/axios";
 
 const emptyForm = {
   jobCode: "",
-  recruiterName: "",
   companyName: "",
   roleName: "",
   skills: "",
   mandatorySkills: "",
-  salaryMin: "",
-  salaryMax: "",
-  experienceMin: "",
-  experienceMax: "",
+  salary: "",
+  experience: "",
+  relevantExperience: "",
   location: "",
   spocName: "",
 };
@@ -21,13 +19,6 @@ function dotColor(createdAt) {
   if (hrs < 24) return "#10b981";
   if (hrs <= 76) return "#f59e0b";
   return "#ef4444";
-}
-
-function dotLabel(createdAt) {
-  const hrs = (Date.now() - new Date(createdAt)) / 3600000;
-  if (hrs < 24) return "Fresh";
-  if (hrs <= 76) return "Aging";
-  return "Old";
 }
 
 export default function JobRequirements() {
@@ -68,7 +59,7 @@ export default function JobRequirements() {
   };
 
   const visible = jobs.filter((j) =>
-    [j.companyName, j.jobCode, j.roleName, j.recruiterName].some((v) =>
+    [j.companyName, j.jobCode, j.roleName].some((v) =>
       v?.toLowerCase().includes(search.toLowerCase()),
     ),
   );
@@ -132,7 +123,7 @@ export default function JobRequirements() {
             {jobs.length} total requirements
           </p>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <div style={{ display: "flex", gap: 12 }}>
             {[
               { color: "#10b981", label: "Fresh <24h" },
@@ -185,23 +176,23 @@ export default function JobRequirements() {
               width: "100%",
               borderCollapse: "collapse",
               tableLayout: "fixed",
-              minWidth: 1200,
+              minWidth: 1100,
             }}
           >
             <thead>
               <tr>
                 <th style={{ ...th, width: 32 }}></th>
-                <th style={{ ...th, width: 85 }}>Job Code</th>
-                <th style={{ ...th, width: 95 }}>Recruiter</th>
-                <th style={{ ...th, width: 100 }}>Company</th>
+                <th style={{ ...th, width: 90 }}>Job Code</th>
+                <th style={{ ...th, width: 120 }}>Company</th>
                 <th style={{ ...th, width: 120 }}>Role</th>
-                <th style={{ ...th, width: 130 }}>Skills</th>
-                <th style={{ ...th, width: 130 }}>Mandatory Skills</th>
-                <th style={{ ...th, width: 95 }}>Salary (LPA)</th>
-                <th style={{ ...th, width: 75 }}>Exp (yr)</th>
+                <th style={{ ...th, width: 140 }}>Skills</th>
+                <th style={{ ...th, width: 140 }}>Mandatory Skills</th>
+                <th style={{ ...th, width: 80 }}>Salary</th>
+                <th style={{ ...th, width: 80 }}>Experience</th>
+                <th style={{ ...th, width: 110 }}>Relevant Exp</th>
                 <th style={{ ...th, width: 90 }}>Location</th>
-                <th style={{ ...th, width: 90 }}>SPOC</th>
-                <th style={{ ...th, width: 100 }}>Actions</th>
+                <th style={{ ...th, width: 80 }}>SPOC</th>
+                <th style={{ ...th, width: 90 }}>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -209,65 +200,16 @@ export default function JobRequirements() {
                 <td style={td}></td>
                 {[
                   "jobCode",
-                  "recruiterName",
                   "companyName",
                   "roleName",
                   "skills",
                   "mandatorySkills",
+                  "salary",
+                  "experience",
+                  "relevantExperience",
+                  "location",
+                  "spocName",
                 ].map((f) => (
-                  <td key={f} style={td}>
-                    <input
-                      name={f}
-                      value={form[f]}
-                      onChange={onChange}
-                      style={inp}
-                      placeholder={f}
-                    />
-                  </td>
-                ))}
-                <td style={td}>
-                  <div
-                    style={{ display: "flex", gap: 4, alignItems: "center" }}
-                  >
-                    <input
-                      name="salaryMin"
-                      value={form.salaryMin}
-                      onChange={onChange}
-                      style={{ ...inp, width: 40 }}
-                      placeholder="Min"
-                    />
-                    <span style={{ fontSize: 10, color: "#9ca3af" }}>–</span>
-                    <input
-                      name="salaryMax"
-                      value={form.salaryMax}
-                      onChange={onChange}
-                      style={{ ...inp, width: 40 }}
-                      placeholder="Max"
-                    />
-                  </div>
-                </td>
-                <td style={td}>
-                  <div
-                    style={{ display: "flex", gap: 4, alignItems: "center" }}
-                  >
-                    <input
-                      name="experienceMin"
-                      value={form.experienceMin}
-                      onChange={onChange}
-                      style={{ ...inp, width: 34 }}
-                      placeholder="Min"
-                    />
-                    <span style={{ fontSize: 10, color: "#9ca3af" }}>–</span>
-                    <input
-                      name="experienceMax"
-                      value={form.experienceMax}
-                      onChange={onChange}
-                      style={{ ...inp, width: 34 }}
-                      placeholder="Max"
-                    />
-                  </div>
-                </td>
-                {["location", "spocName"].map((f) => (
                   <td key={f} style={td}>
                     <input
                       name={f}
@@ -316,7 +258,6 @@ export default function JobRequirements() {
                 visible.map((j) => (
                   <tr
                     key={j.jobCode}
-                    style={{ transition: "background 0.15s" }}
                     onMouseEnter={(e) =>
                       (e.currentTarget.style.background = "#f9fafb")
                     }
@@ -326,7 +267,6 @@ export default function JobRequirements() {
                   >
                     <td style={td}>
                       <div
-                        title={dotLabel(j.createdAt)}
                         style={{
                           width: 10,
                           height: 10,
@@ -340,7 +280,6 @@ export default function JobRequirements() {
                     <td style={{ ...td, fontWeight: 600, color: "#667eea" }}>
                       {j.jobCode}
                     </td>
-                    <td style={td}>{j.recruiterName}</td>
                     <td style={{ ...td, fontWeight: 500 }}>{j.companyName}</td>
                     <td style={td}>{j.roleName}</td>
                     <td style={td}>
@@ -383,25 +322,12 @@ export default function JobRequirements() {
                         </span>
                       ))}
                     </td>
-                    <td style={td}>
-                      <span style={{ fontWeight: 500, color: "#10b981" }}>
-                        ₹{j.salaryMin}–{j.salaryMax}L
-                      </span>
+                    <td style={{ ...td, color: "#10b981", fontWeight: 500 }}>
+                      {j.salary}
                     </td>
-                    <td style={td}>
-                      {j.experienceMin}–{j.experienceMax} yr
-                    </td>
-                    <td style={td}>
-                      <span
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 4,
-                        }}
-                      >
-                        📍 {j.location}
-                      </span>
-                    </td>
+                    <td style={td}>{j.experience}</td>
+                    <td style={td}>{j.relevantExperience}</td>
+                    <td style={td}>📍 {j.location}</td>
                     <td style={td}>{j.spocName}</td>
                     <td style={td}>
                       <button
